@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Agentic AI Systems — FDP @ GITAM</title>
+  <style>
+    :root {
+      --bg:          #f3f7fc;
+      --surface:     #ffffff;
+      --border:      #d4e0ee;
+      --text:        #1c2735;
+      --muted:       #6a7a8e;
+      --header-bg:   #1c2735;
+      --header-sub:  #7e9ab5;
+      --header-pill: rgba(255,255,255,0.10);
+      --day-hd-bg:   #c0d4e8;
+      --day-hd-text: #18293d;
+      --day-hd-sub:  #3a587a;
+      --accent:      #4a7aaa;
+      --accent-light:#e4eef8;
+      --link:        #2e5c8a;
+      --tag-bg:      #dce8f5;
+      --tag-color:   #1e4068;
+      --about-bg:    #eaf1f9;
+      --about-border:#9ab8d4;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── Header ─────────────────────────────────────────── */
+    header {
+      background: var(--header-bg);
+      color: #f5f0ea;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+    }
+
+    .program-label {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--header-sub);
+      margin-bottom: 0.9rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: normal;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+      color: #f5f0ea;
+    }
+
+    .university {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      color: var(--header-sub);
+      margin-bottom: 1.6rem;
+    }
+
+    .meta-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .pill {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--header-pill);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 0.25rem 0.85rem;
+      font-size: 0.8rem;
+      color: #ddd5c8;
+    }
+
+    .instructors {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .instructor-card .role {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--header-sub);
+      margin-bottom: 0.2rem;
+    }
+
+    .instructor-card .name {
+      font-size: 1rem;
+      color: #f5f0ea;
+    }
+
+    .instructor-card .name a {
+      color: #f5f0ea;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .instructor-card .name a:hover {
+      border-bottom-color: rgba(255,255,255,0.7);
+    }
+
+    .instructor-card .group-link {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.73rem;
+      margin-top: 0.2rem;
+    }
+
+    .instructor-card .group-link a {
+      color: #a8c0a8;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .instructor-card .group-link a:hover {
+      border-bottom-color: #a8c0a8;
+    }
+
+    /* ── Layout ──────────────────────────────────────────── */
+    main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Section headings ─────────────────────────────────── */
+    .section-title {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── About banner ─────────────────────────────────────── */
+    .about {
+      background: var(--about-bg);
+      border-left: 3px solid var(--about-border);
+      border-radius: 0 6px 6px 0;
+      padding: 1rem 1.3rem;
+      margin-bottom: 2.5rem;
+      font-size: 0.93rem;
+      color: #4a3e30;
+    }
+
+    /* ── Day grid ─────────────────────────────────────────── */
+    .days-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 1.1rem;
+      margin-bottom: 3rem;
+    }
+
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .day-card:hover { box-shadow: 0 3px 14px rgba(0,0,0,0.07); }
+
+    .day-header {
+      background: var(--day-hd-bg);
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .day-number {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--day-hd-sub);
+    }
+
+    .day-date {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: var(--day-hd-sub);
+      opacity: 0.8;
+    }
+
+    .day-body {
+      padding: 0.85rem 1rem;
+      flex: 1;
+    }
+
+    .day-topic {
+      font-size: 0.92rem;
+      font-weight: normal;
+      color: var(--day-hd-text);
+      margin-bottom: 0.2rem;
+    }
+
+    .day-subtopic {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.76rem;
+      color: var(--muted);
+      margin-bottom: 0.7rem;
+    }
+
+    .day-body ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .day-body ul li a {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      font-size: 0.84rem;
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .day-body ul li a:hover { text-decoration: underline; }
+
+    .link-icon {
+      flex-shrink: 0;
+      font-style: normal;
+      opacity: 0.65;
+    }
+
+    .placeholder {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      color: #b0a898;
+      font-style: italic;
+    }
+
+    /* ── Resource list ────────────────────────────────────── */
+    .resource-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin-bottom: 3rem;
+    }
+
+    .resource-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: box-shadow 0.15s;
+    }
+
+    .resource-item:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+
+    .resource-tag {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      flex-shrink: 0;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .resource-info { flex: 1; min-width: 0; }
+
+    .resource-title {
+      font-size: 0.88rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .resource-desc {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .resource-link {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .resource-link:hover { text-decoration: underline; }
+
+    /* ── Footer ───────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      line-height: 1.8;
+    }
+
+    footer a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 500px) {
+      .days-grid { grid-template-columns: 1fr; }
+      .resource-item { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════ HEADER -->
+<header>
+  <p class="program-label">Faculty Development Program &middot; GITAM University</p>
+  <h1>Engineering Agentic AI Systems</h1>
+  <p class="university">GITAM (Deemed to be University)</p>
+
+  <div class="meta-pills">
+    <span class="pill">June 1 – 6, 2026</span>
+    <span class="pill">6-Day Program</span>
+    <span class="pill">GITAM, Hyderabad</span>
+  </div>
+
+  <div class="instructors">
+    <div class="instructor-card">
+      <div class="role">Instructor</div>
+      <div class="name"><a href="https://karthikvaidhyanathan.com" target="_blank" rel="noopener">Dr. Karthik Vaidhyanathan</a></div>
+      <div class="group-link"><a href="https://sa4s-serc.github.io/" target="_blank" rel="noopener">SA4S Research Group</a></div>
+    </div>
+    <div class="instructor-card">
+      <div class="role">Teaching Assistant</div>
+      <div class="name">Aviral Gupta</div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════ MAIN -->
+<main>
+
+  <div class="about">
+    This page is the central resource hub for FDP participants. Materials, slides, and notebooks
+    for each day will be posted here as the program progresses &mdash; bookmark it and check back daily.
+  </div>
+
+  <!-- ── Daily Resources ─────────────────────────── -->
+  <p class="section-title">Daily Resources</p>
+  <div class="days-grid">
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 1</span>
+        <span class="day-date">&middot; June 1</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">AI &amp; AI-enabled Systems</div>
+        <div class="day-subtopic">Basics of Software Architecture</div>
+        <ul>
+          <li><a href="#" target="_blank" rel="noopener"><span class="link-icon">&#128202;</span> Slides — Introduction to AI Systems</a></li>
+          <li><a href="https://ieeexplore.ieee.org/iel5/2/26009/01160055.pdf?casa_token=t-SiB8GrcOAAAAAA:k7r3dz4vIEBmT6M8lIPzkWh0CmAVxDjc0QYWZZRXlAa3X9BEKRJdJkPKfaiSGNbVZSYbTHsPN7w" target="_blank" rel="noopener"><span class="link-icon">&#128196;</span> Paper — Software Architecture</a></li>
+          <li><a href="#" target="_blank" rel="noopener"><span class="link-icon">&#128218;</span> Reading — AI-enabled Systems Overview</a></li>
+          <li><a href="#" target="_blank" rel="noopener"><span class="link-icon">&#128250;</span> Video — Lecture Recording</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 2</span>
+        <span class="day-date">&middot; June 2</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">LLMs and Prompting</div>
+        <div class="day-subtopic">RAG Systems</div>
+        <ul><li><span class="placeholder">Materials will be posted on Day 2.</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 3</span>
+        <span class="day-date">&middot; June 3</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">Foundations of AI Agents</div>
+        <div class="day-subtopic">Agentic Patterns</div>
+        <ul><li><span class="placeholder">Materials will be posted on Day 3.</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 4</span>
+        <span class="day-date">&middot; June 4</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">Tools and MCP</div>
+        <div class="day-subtopic">Memory in Agentic Systems</div>
+        <ul><li><span class="placeholder">Materials will be posted on Day 4.</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 5</span>
+        <span class="day-date">&middot; June 5</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">A2A Protocol</div>
+        <div class="day-subtopic">Agentic Frameworks</div>
+        <ul><li><span class="placeholder">Materials will be posted on Day 5.</span></li></ul>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-header">
+        <span class="day-number">Day 6</span>
+        <span class="day-date">&middot; June 6</span>
+      </div>
+      <div class="day-body">
+        <div class="day-topic">Frameworks and Beyond</div>
+        <div class="day-subtopic">Evaluation and Maintenance</div>
+        <ul><li><span class="placeholder">Materials will be posted on Day 6.</span></li></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── General Resources ───────────────────────── -->
+  <p class="section-title">General Resources</p>
+  <div class="resource-list">
+
+    <div class="resource-item">
+      <span class="resource-tag">Paper</span>
+      <div class="resource-info">
+        <div class="resource-title">Attention Is All You Need</div>
+        <div class="resource-desc">Vaswani et al., 2017 &mdash; the original Transformer paper</div>
+      </div>
+      <a class="resource-link" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Paper</span>
+      <div class="resource-info">
+        <div class="resource-title">ReAct: Reasoning + Acting in LLMs</div>
+        <div class="resource-desc">Yao et al., 2022 &mdash; foundational agentic reasoning pattern</div>
+      </div>
+      <a class="resource-link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Paper</span>
+      <div class="resource-info">
+        <div class="resource-title">Toolformer</div>
+        <div class="resource-desc">Schick et al., 2023 &mdash; LLMs learning to use tools</div>
+      </div>
+      <a class="resource-link" href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Paper</span>
+      <div class="resource-info">
+        <div class="resource-title">A Survey on LLM-based Autonomous Agents</div>
+        <div class="resource-desc">Wang et al., 2023 &mdash; comprehensive survey of the agentic AI landscape</div>
+      </div>
+      <a class="resource-link" href="https://arxiv.org/abs/2308.11432" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Guide</span>
+      <div class="resource-info">
+        <div class="resource-title">Anthropic &mdash; Building Effective Agents</div>
+        <div class="resource-desc">Practical patterns and pitfalls for agentic system design</div>
+      </div>
+      <a class="resource-link" href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Docs</span>
+      <div class="resource-info">
+        <div class="resource-title">LangChain Agents Documentation</div>
+        <div class="resource-desc">Official docs for building agents with LangChain</div>
+      </div>
+      <a class="resource-link" href="https://python.langchain.com/docs/how_to/#agents" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Docs</span>
+      <div class="resource-info">
+        <div class="resource-title">OpenAI Agents SDK</div>
+        <div class="resource-desc">Lightweight multi-agent orchestration framework by OpenAI</div>
+      </div>
+      <a class="resource-link" href="https://openai.github.io/openai-agents-python/" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Docs</span>
+      <div class="resource-info">
+        <div class="resource-title">Google Agent Development Kit (ADK)</div>
+        <div class="resource-desc">Google's open-source framework for building agentic systems</div>
+      </div>
+      <a class="resource-link" href="https://google.github.io/adk-docs/" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+    <div class="resource-item">
+      <span class="resource-tag">Docs</span>
+      <div class="resource-info">
+        <div class="resource-title">Model Context Protocol (MCP)</div>
+        <div class="resource-desc">Anthropic's open standard for connecting LLMs to external tools</div>
+      </div>
+      <a class="resource-link" href="https://modelcontextprotocol.io/" target="_blank" rel="noopener">Open &rarr;</a>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <div>FDP &mdash; Engineering Agentic AI Systems &middot; GITAM University &middot; June 1&ndash;6, 2026</div>
+  <div>&copy; 2026 <a href="https://karthikvaidhyanathan.com" target="_blank" rel="noopener">Karthik Vaidhyanathan</a>
+  &middot; <a href="https://sa4s-serc.github.io/" target="_blank" rel="noopener">SA4S Research Group</a></div>
+</footer>
+
+</body>
+</html>
